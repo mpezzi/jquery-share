@@ -19,7 +19,7 @@
           url       = o.url || document.URL,
           host      = o.host || document.URL,
           
-          _share    = $('<div class="jquery-share" />'),
+          _share    = $('<div />').attr('id', o.id),
           _list     = $('<ul />').appendTo(_share);
       
       // Add enabled services to the share list.
@@ -46,6 +46,7 @@
   
   // Default settings.
   $.fn.share.defaults = {
+    id: 'jquery-share',
     included: null,
     excluded: null,
     hover: false,
