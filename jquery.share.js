@@ -12,38 +12,31 @@
   
   $.fn.share = function(settings) {
     return this.each(function(){
-      var self   = $(this), o = $.extend({}, $.fn.share.defaults, settings || {})
-          share  = $('<div class="jquery-share" />'),
-          list   = $('<ul />').appendTo(share),
-          title  = o.title || document.title,
-          url    = o.url || document.URL,
-          host   = o.host || url;
-      
-      $.each( ( o.services == null ) ? available_services() : o.services, function(){
-        if ( typeof $.fn.share.services[this] !== 'undefined' ) {
-          var service_url = $.fn.share.services[this].url,
-              service_url_replace = service_url.replace('${title}', title).replace('${url}', url).replace('${host}', host);
+      var self      = $(this), o = $.extend({}, $.fn.share.defaults, settings || {}),
           
-          var item = $('<li />').addClass(this).appendTo(list),
-              link = $('<a />').attr('href', service_url_replace).html($.fn.share.services[this].name).appendTo(item);
+          services  = $.fn.share.services,
+          title     = o.title || document.title,
+          url       = o.url || document.URL,
+          host      = o.host || document.URL,
+          
+          _share    = $('<div class="jquery-share" />'),
+          _list     = $('<ul />').appendTo(_share);
+      
+      $.each( o.services || services.keys() , function(){
+        if ( services.hasOwnProperty(this) ) {
+          var _service  = services[this],
+              _url      = _service.url,
+              _url_p    = _url.replace('${title}', title).replace('${url}', url).replace('${host}', host),
+              _item     = $('<li />').addClass(this).appendTo(_list),
+              _link     = $('<a />').attr('href', _url_p).html(_service.name).appendTo(_item);
         }
       });
       
       self.bind('mouseup', function(e){
-        if ( o.show )
-          o.show(e, share);
+        o.show(e, _share);
       });
     });
     
-    function available_services() {
-      var available = [];
-      
-      $.each($.fn.share.services, function(key, service){
-        available.push(key);
-      });
-      
-      return available;
-    }
   };
   
   // Default settings.
@@ -53,11 +46,11 @@
     title: null,
     url: null,
     host: null,
-    show: null,
-    hide: null
+    show: function() {},
+    hide: function() {}
   };
   
-  // Availble share services.
+  // Availble sharing services.
   $.fn.share.services = {
     twitter:      { name: 'Twitter', url: 'http://twitter.com/home?status=${title}%20${url}' },
     facebook:     { name: 'Facebook', url: 'http://facebook.com/sharer.php?u=${url}' },
@@ -65,6 +58,17 @@
     stumbleupon:  { name: 'Stumbleupon', url: 'http://stumbleupon.com/submit?url=${url}&title=${title}' },
     buzz:         { name: 'Buzz', url: 'http://google.com/reader/link?url=${url}&title=${title}&srcURL=${host}' },
     delicious:    { name: 'Delicious', url: 'http://del.icio.us/post?url=${url}&title=${title}' }
+  };
+  
+  // Extend Object prototype.
+  Object.prototype.keys = function() {
+    var keys = [];
+    
+    for ( var key in this ) {
+      keys.push(key);
+    }
+    
+    return keys;
   };
   
 })(jQuery);
