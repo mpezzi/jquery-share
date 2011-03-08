@@ -45,7 +45,8 @@
         self.data('state', !state);
       });
       
-      if ( fragment && o.fragment ) {
+      // If fragment checking is enabled and is active, open share list on page load.
+      if ( o.fragment && fragment ) {
         o.show(_share);
       }
       
