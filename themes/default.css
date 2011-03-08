@@ -1,0 +1,13 @@
+.jquery-share li a {
+  display: block;
+  height: 32px;
+  padding-left: 42px;
+  background-repeat: no-repeat;
+}
+
+.share-delicious-32 { background-image: url(../iconset/delicious_32.png); }
+.share-digg-32 { background-image: url(../iconset/digg_32.png); }
+.share-facebook-32 { background-image: url(../iconset/facebook_32.png); }
+.share-twitter-32 { background-image: url(../iconset/twitter_32.png); }
+.share-reddit-32 { background-image: url(../iconset/reddit_32.png); }
+.share-stumbleupon-32 { background-image: url(../iconset/stumbleupon_32.png); }
