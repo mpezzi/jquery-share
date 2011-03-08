@@ -28,7 +28,8 @@
           var s     = services[this],
               href  = String(s.url).replace('${title}', title).replace('${url}', url).replace('${host}', host),
               _item = $('<li />').addClass(this).appendTo(_list),
-              _link = $('<a />').attr('href', href).html(s.name).appendTo(_item);
+              _link = $('<a />').addClass('share-' + this + '-' + o.iconset)
+                        .attr('href', href).html(s.name).appendTo(_item);
         }
       });
       
@@ -46,6 +47,8 @@
     title: null,
     url: null,
     host: null,
+    iconset: '32',
+    iconsettype: 'png',
     show: function() {},
     hide: function() {}
   };
