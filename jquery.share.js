@@ -23,9 +23,9 @@
           _list     = $('<ul />').appendTo(_share);
       
       // Add enabled services to the share list.
-      $.each( o.services || services.keys() , function(){
-        if ( services.hasOwnProperty(this) ) {
-          var s     = services[this],
+      $.each( o.included || services.keys() , function(i, name){
+        if ( services.hasOwnProperty(name) && $.inArray(name, o.excluded) == -1 ) {
+          var s     = services[name],
               href  = String(s.url).replace('${title}', title).replace('${url}', url).replace('${host}', host),
               _item = $('<li />').addClass(this).appendTo(_list),
               _link = $('<a />').addClass('share-' + this + '-' + o.iconset)
@@ -44,7 +44,8 @@
   
   // Default settings.
   $.fn.share.defaults = {
-    services: null,
+    included: null,
+    excluded: null,
     hover: false,
     title: null,
     url: null,
