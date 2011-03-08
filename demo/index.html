@@ -24,8 +24,11 @@
 <script type="text/javascript">
   $(function(){
     $('#share').share({
-      load: function(share) {
+      show: function(share) {
         $('body').append(share);
+      },
+      hide: function(share) {
+        share.remove();
       }
     });
   });
