@@ -34,8 +34,10 @@
       });
       
       self.bind('mouseup', function(e){
-        o.show(e, _share);
+        o.show(_share);
       });
+      
+      o.load(_share);
     });
     
   };
@@ -50,6 +52,7 @@
     iconset: '32',
     iconsettype: 'png',
     show: function() {},
+    load: function() {},
     hide: function() {}
   };
   

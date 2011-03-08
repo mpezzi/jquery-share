@@ -24,7 +24,7 @@
 <script type="text/javascript">
   $(function(){
     $('#share').share({
-      show: function(e, share) {
+      load: function(share) {
         $('body').append(share);
       }
     });
