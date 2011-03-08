@@ -28,7 +28,7 @@
       title = self.attr('data-share-title') || title;
       
       // Add enabled services to the share list.
-      $.each( o.included || services.keys() , function(i, name){
+      $.each( o.included || getkeys(services) , function(i, name){
         if ( services.hasOwnProperty(name) && $.inArray(name, o.excluded) == -1 ) {
           var s     = services[name],
               href  = String(s.url).replace('${title}', title).replace('${url}', url).replace('${host}', host),
@@ -38,12 +38,21 @@
         }
       });
       
+      // Set default state as hidden.
+      self.data('state', false);
+      
       // Listen for mouse events.
-      self.bind('mouseup', function(e){
+      self.bind('click', function(e){
         var state = self.data('state');
-        state ? o.show(_share) : o.hide(_share);
+        state ? o.hide(_share) : o.show(_share);
         self.data('state', !state);
+        //event.preventDefault();
       });
+      
+      // If fragmenting is enabled add to link.
+      if ( o.fragment ) {
+        self.attr('href', '#' + self.attr('id'));
+      }
       
       // If fragment checking is enabled and is active, open share list on page load.
       if ( o.fragment && fragment ) {
@@ -58,8 +67,8 @@
   $.fn.share.defaults = {
     cssclass: 'jquery-share',
     included: null,
-    excluded: null,
-    fragment: true,
+    excluded: [],
+    fragment: false,
     hover: false,
     title: null,
     url: null,
@@ -81,13 +90,10 @@
     delicious:    { name: 'Delicious', url: 'http://del.icio.us/post?url=${url}&amp;title=${title}' }
   };
   
-  // Extend Object prototype.
-  Object.prototype.keys = function() {
-    var keys = [];
-    for ( var key in this ) {
-      keys.push(key);
-    }
-    return keys;
-  };
+  function getkeys(obj) {
+    var a = [];
+    $.each(obj, function(k) { a.push(k) });
+    return a;
+  }
   
 })(jQuery);
