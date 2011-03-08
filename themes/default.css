@@ -1,3 +1,22 @@
+.jquery-share {
+  width: 300px;
+  min-height: 300px;
+  padding: 20px;
+  background: #fff;
+  
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+}
+
+.jquery-share ul {
+  margin: 0;
+  padding: 0;
+}
+
+.jquery-share li {
+  list-style: none;
+}
+
 .jquery-share li a {
   display: block;
   height: 32px;
