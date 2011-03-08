@@ -56,7 +56,7 @@
     facebook:     { name: 'Facebook', url: 'http://facebook.com/sharer.php?u=${url}' },
     digg:         { name: 'Digg', url: 'http://digg.com/submit?phase=2&url=${url}&title=${title}' },
     stumbleupon:  { name: 'Stumbleupon', url: 'http://stumbleupon.com/submit?url=${url}&title=${title}' },
-    buzz:         { name: 'Buzz', url: 'http://google.com/reader/link?url=${url}&title=${title}&srcURL=${host}' },
+    reddit:       { name: 'Reddit', url: 'http://reddit.com/submit?url=${url}&amp;title=${title}' },
     delicious:    { name: 'Delicious', url: 'http://del.icio.us/post?url=${url}&title=${title}' }
   };
   
