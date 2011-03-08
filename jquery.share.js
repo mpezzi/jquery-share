@@ -54,10 +54,10 @@
   $.fn.share.services = {
     twitter:      { name: 'Twitter', url: 'http://twitter.com/home?status=${title}%20${url}' },
     facebook:     { name: 'Facebook', url: 'http://facebook.com/sharer.php?u=${url}' },
-    digg:         { name: 'Digg', url: 'http://digg.com/submit?phase=2&url=${url}&title=${title}' },
-    stumbleupon:  { name: 'Stumbleupon', url: 'http://stumbleupon.com/submit?url=${url}&title=${title}' },
+    digg:         { name: 'Digg', url: 'http://digg.com/submit?phase=2&amp;url=${url}&amp;title=${title}' },
+    stumbleupon:  { name: 'Stumbleupon', url: 'http://stumbleupon.com/submit?url=${url}&amp;title=${title}' },
     reddit:       { name: 'Reddit', url: 'http://reddit.com/submit?url=${url}&amp;title=${title}' },
-    delicious:    { name: 'Delicious', url: 'http://del.icio.us/post?url=${url}&title=${title}' }
+    delicious:    { name: 'Delicious', url: 'http://del.icio.us/post?url=${url}&amp;title=${title}' }
   };
   
   // Extend Object prototype.
