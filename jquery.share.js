@@ -34,7 +34,9 @@
       });
       
       self.bind('mouseup', function(e){
-        o.show(_share);
+        var state = self.data('state');
+        state ? o.show(_share) : o.hide(_share);
+        self.data('state', !state);
       });
       
       o.load(_share);
