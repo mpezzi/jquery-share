@@ -41,7 +41,6 @@
       
       o.load(_share);
     });
-    
   };
   
   // Default settings.
@@ -73,11 +72,9 @@
   // Extend Object prototype.
   Object.prototype.keys = function() {
     var keys = [];
-    
     for ( var key in this ) {
       keys.push(key);
     }
-    
     return keys;
   };
   
