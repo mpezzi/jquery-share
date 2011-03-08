@@ -15,12 +15,16 @@
       var self      = $(this), o = $.extend({}, $.fn.share.defaults, settings || {}),
           
           services  = $.fn.share.services,
-          title     = o.title || document.title,
-          url       = o.url || document.URL,
           host      = o.host || document.URL,
+          url       = o.url || document.URL,
+          title     = o.title || document.title,
           
           _share    = $('<div />').attr('id', o.id),
           _list     = $('<ul />').appendTo(_share);
+      
+      // Override defaults and settings with element attributes.
+      url = self.attr('data-share-url') || url;
+      title = self.attr('data-share-title') || title;
       
       // Add enabled services to the share list.
       $.each( o.included || services.keys() , function(i, name){
