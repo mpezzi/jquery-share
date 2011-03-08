@@ -22,13 +22,13 @@
           _share    = $('<div class="jquery-share" />'),
           _list     = $('<ul />').appendTo(_share);
       
+      // Add enabled services to the share list.
       $.each( o.services || services.keys() , function(){
         if ( services.hasOwnProperty(this) ) {
-          var _service  = services[this],
-              _url      = _service.url,
-              _url_p    = _url.replace('${title}', title).replace('${url}', url).replace('${host}', host),
-              _item     = $('<li />').addClass(this).appendTo(_list),
-              _link     = $('<a />').attr('href', _url_p).html(_service.name).appendTo(_item);
+          var s     = services[this],
+              href  = String(s.url).replace('${title}', title).replace('${url}', url).replace('${host}', host),
+              _item = $('<li />').addClass(this).appendTo(_list),
+              _link = $('<a />').attr('href', href).html(s.name).appendTo(_item);
         }
       });
       
