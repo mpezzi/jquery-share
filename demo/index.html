@@ -7,20 +7,16 @@
   
   <title>jQuery Share Plugin</title>
   
-  <style type="text/css">@import "../themes/default.css";</style>
+  <link rel="stylesheet" href="../themes/default.css">
   
 </head>
 
 <body>
 
 <div id="page">
-  <ul>
-    <li>
-      <a href="#share-basic" class="share" id="share-basic">Demo: Basic Share this!</a>
-    </li>
-    <li>
-      <a href="#share-override" class="share" id="share-override" data-share-title="This is an override" data-share-url="http://google.com">Demo: Override-able Share this!</a>
-    </li>
+  <ul class="share">
+    <li><a href="#share-basic" id="share-basic">Demo: Basic Share this!</a></li>
+    <li><a href="#share-override" id="share-override" data-share-title="This is an override" data-share-url="http://google.com">Demo: Override-able Share this!</a></li>
   </ul>
 </div>
 
@@ -28,7 +24,7 @@
 <script type="text/javascript" src="../jquery.share.js"></script>
 <script type="text/javascript">
   $(function(){
-    $('a.share').share({
+    $('ul.share a').share({
       show: function(share) {
         $('body').append(share);
       },
