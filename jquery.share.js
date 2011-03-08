@@ -15,6 +15,7 @@
       var self      = $(this), o = $.extend({}, $.fn.share.defaults, settings || {}),
           
           services  = $.fn.share.services,
+          fragment  = ( document.location.hash.substring(1) == self.attr('id') ),
           host      = o.host || document.URL,
           url       = o.url || document.URL,
           title     = o.title || document.title,
@@ -37,11 +38,16 @@
         }
       });
       
+      // Listen for mouse events.
       self.bind('mouseup', function(e){
         var state = self.data('state');
         state ? o.show(_share) : o.hide(_share);
         self.data('state', !state);
       });
+      
+      if ( fragment && o.fragment ) {
+        o.show(_share);
+      }
       
       o.load(_share);
     });
@@ -52,6 +58,7 @@
     cssclass: 'jquery-share',
     included: null,
     excluded: null,
+    fragment: true,
     hover: false,
     title: null,
     url: null,
