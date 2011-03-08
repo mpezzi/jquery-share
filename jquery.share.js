@@ -19,7 +19,7 @@
           url       = o.url || document.URL,
           title     = o.title || document.title,
           
-          _share    = $('<div />').attr('id', o.id),
+          _share    = $('<div />').attr('class', o.cssclass),
           _list     = $('<ul />').appendTo(_share);
       
       // Override defaults and settings with element attributes.
@@ -49,7 +49,7 @@
   
   // Default settings.
   $.fn.share.defaults = {
-    id: 'jquery-share',
+    cssclass: 'jquery-share',
     included: null,
     excluded: null,
     hover: false,
