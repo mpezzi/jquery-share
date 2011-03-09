@@ -31,7 +31,7 @@
       $.each( o.included || getkeys(services) , function(i, name){
         if ( services.hasOwnProperty(name) && $.inArray(name, o.excluded) == -1 ) {
           var s     = services[name],
-              href  = String(s.url).replace('${title}', title).replace('${url}', url).replace('${host}', host),
+              href  = String(s.url).replace('${title}', o.prepend + title + o.append).replace('${url}', url).replace('${host}', host),
               _item = $('<li />').addClass(this).appendTo(_list),
               _link = $('<a />').addClass('share-' + this + '-' + o.iconset)
                         .attr('href', href).html(s.name).appendTo(_item);
@@ -68,6 +68,8 @@
     cssclass: 'jquery-share',
     included: null,
     excluded: [],
+    prepend: '',
+    append: '',
     fragment: false,
     hover: false,
     title: null,
