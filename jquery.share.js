@@ -34,7 +34,7 @@
               href  = String(s.url).replace('${title}', o.prepend + title + o.append).replace('${url}', url).replace('${host}', host),
               _item = $('<li />').addClass(this).appendTo(_list),
               _link = $('<a />').addClass('share-' + this + '-' + o.iconset)
-                        .attr('href', href).html(s.name).appendTo(_item);
+                        .attr('href', href).attr('target', o.target).html(s.name).appendTo(_item);
         }
       });
       
@@ -70,6 +70,7 @@
     excluded: [],
     prepend: '',
     append: '',
+    target: '_blank',
     fragment: false,
     hover: false,
     title: null,
