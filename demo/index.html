@@ -28,7 +28,12 @@
   $(function(){
     $('ul.share a').share({
       show: function(share) {
-        share.lightbox_me({ destroyOnClose: true });
+        share.list.lightbox_me({ 
+          destroyOnClose: true,
+          onClose: function() {
+            share.trigger.data('state', false);
+          }
+        });
       }
     });
   });
