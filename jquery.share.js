@@ -28,29 +28,40 @@
       title = self.attr('data-share-title') || title;
       
       // Add enabled services to the share list.
-      $.each( o.included || services.keys() , function(i, name){
+      $.each( o.included || getkeys(services) , function(i, name){
         if ( services.hasOwnProperty(name) && $.inArray(name, o.excluded) == -1 ) {
           var s     = services[name],
-              href  = String(s.url).replace('${title}', title).replace('${url}', url).replace('${host}', host),
+              href  = String(s.url).replace('${title}', o.prepend + title + o.append).replace('${url}', url).replace('${host}', host),
               _item = $('<li />').addClass(this).appendTo(_list),
               _link = $('<a />').addClass('share-' + this + '-' + o.iconset)
-                        .attr('href', href).html(s.name).appendTo(_item);
+                        .attr('href', href).attr('target', o.target).html(s.name).appendTo(_item);
         }
       });
       
+      // Build return object for callbacks.
+      var callback_return = { trigger: self, list: _share };
+      
+      // Set default state as hidden.
+      self.data('state', false);
+      
       // Listen for mouse events.
-      self.bind('mouseup', function(e){
+      self.bind('click', function(e){
         var state = self.data('state');
-        state ? o.show(_share) : o.hide(_share);
+        state ? o.hide(callback_return) : o.show(callback_return);
         self.data('state', !state);
       });
       
-      // If fragment checking is enabled and is active, open share list on page load.
-      if ( o.fragment && fragment ) {
-        o.show(_share);
+      // If fragmenting is enabled add to link.
+      if ( o.fragment ) {
+        self.attr('href', '#' + self.attr('id'));
       }
       
-      o.load(_share);
+      // If fragment checking is enabled and is active, open share list on page load.
+      if ( o.fragment && fragment ) {
+        o.show(callback_return);
+      }
+      
+      o.load(callback_return);
     });
   };
   
@@ -58,8 +69,11 @@
   $.fn.share.defaults = {
     cssclass: 'jquery-share',
     included: null,
-    excluded: null,
-    fragment: true,
+    excluded: [],
+    prepend: '',
+    append: '',
+    target: '_blank',
+    fragment: false,
     hover: false,
     title: null,
     url: null,
@@ -81,13 +95,10 @@
     delicious:    { name: 'Delicious', url: 'http://del.icio.us/post?url=${url}&amp;title=${title}' }
   };
   
-  // Extend Object prototype.
-  Object.prototype.keys = function() {
-    var keys = [];
-    for ( var key in this ) {
-      keys.push(key);
-    }
-    return keys;
-  };
+  function getkeys(obj) {
+    var a = [];
+    $.each(obj, function(k) { a.push(k) });
+    return a;
+  }
   
 })(jQuery);
