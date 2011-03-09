@@ -26,10 +26,10 @@
   $(function(){
     $('ul.share a').share({
       show: function(share) {
-        $('body').append(share);
+        $('body').append(share.list);
       },
       hide: function(share) {
-        share.remove();
+        share.list.remove();
       }
     });
   });
