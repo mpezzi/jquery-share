@@ -38,15 +38,17 @@
         }
       });
       
+      // Build return object for callbacks.
+      var callback_return = { trigger: self, list: _share };
+      
       // Set default state as hidden.
       self.data('state', false);
       
       // Listen for mouse events.
       self.bind('click', function(e){
         var state = self.data('state');
-        state ? o.hide(_share) : o.show(_share);
+        state ? o.hide(callback_return) : o.show(callback_return);
         self.data('state', !state);
-        //event.preventDefault();
       });
       
       // If fragmenting is enabled add to link.
@@ -56,10 +58,10 @@
       
       // If fragment checking is enabled and is active, open share list on page load.
       if ( o.fragment && fragment ) {
-        o.show(_share);
+        o.show(callback_return);
       }
       
-      o.load(_share);
+      o.load(callback_return);
     });
   };
   
