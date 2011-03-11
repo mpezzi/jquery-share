@@ -1,4 +1,4 @@
-.jquery-share {
+.jquery-share-lightbox {
   width: 325px;
   padding: 20px;
   background: #fff;
@@ -15,17 +15,17 @@
   box-shadow: 1px 1px 40px #000;
 }
 
-.jquery-share ul {
+.jquery-share-lightbox ul {
   margin: 0;
   padding: 0;
 }
 
-.jquery-share li {
+.jquery-share-lightbox li {
   float: left;
   list-style: none;
 }
 
-.jquery-share li a {
+.jquery-share-lightbox li a {
   display: block;
   width: 100px;
   margin: 5px;
@@ -37,9 +37,9 @@
   color: #403e3c;
 }
 
-.share-delicious-32 { background-image: url(../iconset/delicious_32.png); }
-.share-digg-32 { background-image: url(../iconset/digg_32.png); }
-.share-facebook-32 { background-image: url(../iconset/facebook_32.png); }
-.share-twitter-32 { background-image: url(../iconset/twitter_32.png); }
-.share-reddit-32 { background-image: url(../iconset/reddit_32.png); }
-.share-stumbleupon-32 { background-image: url(../iconset/stumbleupon_32.png); }
+.jquery-share-lightbox .share-delicious-32 { background-image: url(../iconset/delicious_32.png); }
+.jquery-share-lightbox .share-digg-32 { background-image: url(../iconset/digg_32.png); }
+.jquery-share-lightbox .share-facebook-32 { background-image: url(../iconset/facebook_32.png); }
+.jquery-share-lightbox .share-twitter-32 { background-image: url(../iconset/twitter_32.png); }
+.jquery-share-lightbox .share-reddit-32 { background-image: url(../iconset/reddit_32.png); }
+.jquery-share-lightbox .share-stumbleupon-32 { background-image: url(../iconset/stumbleupon_32.png); }

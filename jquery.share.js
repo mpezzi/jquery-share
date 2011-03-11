@@ -1,7 +1,7 @@
 /*
  * jQuery Share Plugin by M. Pezzi
  * http://thespiral.ca/jquery/share/demo/
- * Version: 1.0 (03/07/11)
+ * Version: 0.2-alpha (03/11/11)
  * Dual licensed under the MIT and GPL licences:
  * http://www.opensource.org/licenses/mit-license.php
  * http://www.gnu.org/licenses/gpl.html
@@ -54,7 +54,7 @@
             _active   = self.data('share:active'),
             _callback = { trigger: self, list: _share };
         
-        _active ? o.hide(_callback) : o.show(_callback);
+        _active ? o.hide.call(self, _callback) : o.show.call(self, _callback);
         
         self.data('share:active', !_active);
       });

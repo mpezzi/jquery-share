@@ -1,0 +1,9 @@
+Share
+=====
+
+jQuery Share provides a simple way of adding share links to you page, it is easily extendable and can be used in conjunction with other plugins (lightbox for example)
+
+Resources
+---------
+
+* [Demonstration](http://thespiral.ca/jquery/share/demo/)

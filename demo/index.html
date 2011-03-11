@@ -16,6 +16,11 @@
     #page {
       font-size: 0.75em;
     }
+    
+    .share a,
+    .share-lightbox a {
+      cursor: pointer;
+    }
   </style>
   
   <link rel="stylesheet" href="themes/default.css">
@@ -25,10 +30,36 @@
 <body>
 
 <div id="page">
+  
+  <h1>jQuery Share Plugin</h1>
+  
+  <p>jQuery Share provides a simple way of adding share links to you page, it is easily extendable and can be used in conjunction with other plugins (lightbox for example)</p>
+  
+  <h3>Basic example</h3>
   <ul class="share">
     <li><a id="share-basic">Demo: Basic Share this!</a></li>
     <li><a id="share-override" data-share-title="This is an override" data-share-url="http://google.com">Demo: Override-able Share this!</a></li>
   </ul>
+  
+  <h3>Lightbox Example</h3>
+  <ul class="share-lightbox">
+    <li><a id="share-basic">Demo: Basic Share this!</a></li>
+    <li><a id="share-override" data-share-title="This is an override" data-share-url="http://google.com">Demo: Override-able Share this!</a></li>
+  </ul>
+  
+  <h3>Extendable Services</h3>
+  
+  <p>Define extra services to include into your share lists.</p>
+  
+  <pre>// Extend the services.
+$.fn.share.services.myservice = {
+  name: 'My Other Service',
+  url: 'http://example.com/?title=${title}&amp;url=${url}'
+};
+</pre>
+
+<a href="http://github.com/mpezzi/jquery-share">Download the code from GitHub</a>
+  
 </div>
 
 <script type="text/javascript" src="../jquery.min.js"></script>
@@ -37,7 +68,26 @@
 
 <script type="text/javascript">
   $(function(){
+    
+    // Extend the services.
+    $.fn.share.services.myservice = {
+      name: 'My Other Service',
+      url: 'http://example.com/?title=${title}&amp;url=${url}'
+    };
+    
+    // Basic example.
     $('ul.share a').share({
+      show: function(share){
+        share.list.insertAfter( $(this) );
+      },
+      hide: function(share){
+        share.list.remove();
+      }
+    });
+    
+    // Lightbox example.
+    $('ul.share-lightbox a').share({
+      cssclass: 'jquery-share-lightbox',
       show: function(share) {
         share.list.lightbox_me({ 
           destroyOnClose: true,
@@ -47,6 +97,7 @@
         });
       }
     });
+    
   });
 </script>
 
