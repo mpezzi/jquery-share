@@ -7,6 +7,17 @@
   
   <title>jQuery Share Plugin</title>
   
+  <style type="text/css" media="screen">
+    body {
+      font-family: "Helvetica Neue", Helvetica, arial, sans-serif;
+      font-size: 100%;
+    }
+    
+    #page {
+      font-size: 0.75em;
+    }
+  </style>
+  
   <link rel="stylesheet" href="../themes/default.css">
   
 </head>
@@ -21,15 +32,19 @@
 </div>
 
 <script type="text/javascript" src="../jquery.min.js"></script>
+<script type="text/javascript" src="../plugins/jquery.lightbox.js"></script>
 <script type="text/javascript" src="../jquery.share.js"></script>
+
 <script type="text/javascript">
   $(function(){
     $('ul.share a').share({
       show: function(share) {
-        $('body').append(share.list);
-      },
-      hide: function(share) {
-        share.list.remove();
+        share.list.lightbox_me({ 
+          destroyOnClose: true,
+          onClose: function() {
+            share.trigger.data('share:active', false);
+          }
+        });
       }
     });
   });
