@@ -18,37 +18,45 @@
           fragment  = ( document.location.hash.substring(1) == self.attr('id') ),
           host      = o.host || document.URL,
           url       = o.url || document.URL,
-          title     = o.title || document.title,
-          
-          _share    = $('<div />').attr('class', o.cssclass),
-          _list     = $('<ul />').appendTo(_share);
+          title     = o.title || document.title;
       
       // Override defaults and settings with element attributes.
       url = self.attr('data-share-url') || url;
       title = self.attr('data-share-title') || title;
       
-      // Add enabled services to the share list.
-      $.each( o.included || getkeys(services) , function(i, name){
-        if ( services.hasOwnProperty(name) && $.inArray(name, o.excluded) == -1 ) {
-          var s     = services[name],
-              href  = String(s.url).replace('${title}', o.prepend + title + o.append).replace('${url}', url).replace('${host}', host),
-              _item = $('<li />').addClass(this).appendTo(_list),
-              _link = $('<a />').addClass('share-' + this + '-' + o.iconset)
-                        .attr('href', href).attr('target', o.target).html(s.name).appendTo(_item);
-        }
-      });
-      
-      // Build return object for callbacks.
-      var callback_return = { trigger: self, list: _share };
-      
-      // Set default state as hidden.
-      self.data('state', false);
+      // Set default data.
+      self.data('share:list', false);
+      self.data('share:active', false);
       
       // Listen for mouse events.
       self.bind('click', function(e){
-        var state = self.data('state');
-        state ? o.hide(callback_return) : o.show(callback_return);
-        self.data('state', !state);
+        
+        // Build list.
+        if ( !self.data('share:list') ) {
+          var _container = $('<div />').attr('class', o.cssclass),
+              _list      = $('<ul />').appendTo(_container);
+          
+          // Add enabled services to the share list.
+          $.each( o.included || getkeys(services) , function(i, name){
+            if ( services.hasOwnProperty(name) && $.inArray(name, o.excluded) == -1 ) {
+              var s     = services[name],
+                  href  = String(s.url).replace('${title}', o.prepend + title + o.append).replace('${url}', url).replace('${host}', host),
+                  _item = $('<li />').addClass(this).appendTo(_list),
+                  _link = $('<a />').addClass('share-' + this + '-' + o.iconset)
+                            .attr('href', href).attr('target', o.target).html(s.name).appendTo(_item);
+            }
+          });
+          
+          self.data('share:list', _container);
+        }
+        
+        var _share    = self.data('share:list'),
+            _active   = self.data('share:active'),
+            _callback = { trigger: self, list: _share };
+        
+        _active ? o.hide(_callback) : o.show(_callback);
+        
+        self.data('share:active', !_active);
       });
       
       // If fragmenting is enabled add to link.
@@ -58,10 +66,8 @@
       
       // If fragment checking is enabled and is active, open share list on page load.
       if ( o.fragment && fragment ) {
-        o.show(callback_return);
+        self.trigger('click');
       }
-      
-      o.load(callback_return);
     });
   };
   
@@ -81,7 +87,6 @@
     iconset: '32',
     iconsettype: 'png',
     show: function() {},
-    load: function() {},
     hide: function() {}
   };
   
