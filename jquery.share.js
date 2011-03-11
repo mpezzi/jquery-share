@@ -1,7 +1,7 @@
 /*
  * jQuery Share Plugin by M. Pezzi
  * http://thespiral.ca/jquery/share/demo/
- * Version: 1.0 (03/07/11)
+ * Version: 0.2-alpha (03/11/11)
  * Dual licensed under the MIT and GPL licences:
  * http://www.opensource.org/licenses/mit-license.php
  * http://www.gnu.org/licenses/gpl.html
@@ -15,37 +15,77 @@
       var self      = $(this), o = $.extend({}, $.fn.share.defaults, settings || {}),
           
           services  = $.fn.share.services,
-          title     = o.title || document.title,
-          url       = o.url || document.URL,
+          fragment  = ( document.location.hash.substring(1) == self.attr('id') ),
           host      = o.host || document.URL,
+          url       = o.url || document.URL,
+          title     = o.title || document.title;
+      
+      // Override defaults and settings with element attributes.
+      url = self.attr('data-share-url') || url;
+      title = self.attr('data-share-title') || title;
+      
+      // Set default data.
+      self.data('share:list', false);
+      self.data('share:active', false);
+      
+      // Listen for mouse events.
+      self.bind('click', function(e){
+        
+        // Build list.
+        if ( !self.data('share:list') ) {
+          var _container = $('<div />').attr('class', o.cssclass),
+              _list      = $('<ul />').appendTo(_container);
           
-          _share    = $('<div class="jquery-share" />'),
-          _list     = $('<ul />').appendTo(_share);
-      
-      $.each( o.services || services.keys() , function(){
-        if ( services.hasOwnProperty(this) ) {
-          var _service  = services[this],
-              _url      = _service.url,
-              _url_p    = _url.replace('${title}', title).replace('${url}', url).replace('${host}', host),
-              _item     = $('<li />').addClass(this).appendTo(_list),
-              _link     = $('<a />').attr('href', _url_p).html(_service.name).appendTo(_item);
+          // Add enabled services to the share list.
+          $.each( o.included || getkeys(services) , function(i, name){
+            if ( services.hasOwnProperty(name) && $.inArray(name, o.excluded) == -1 ) {
+              var s     = services[name],
+                  href  = String(s.url).replace('${title}', o.prepend + title + o.append).replace('${url}', url).replace('${host}', host),
+                  _item = $('<li />').addClass(this).appendTo(_list),
+                  _link = $('<a />').addClass('share-' + this + '-' + o.iconset)
+                            .attr('href', href).attr('target', o.target).html(s.name).appendTo(_item);
+            }
+          });
+          
+          self.data('share:list', _container);
         }
+        
+        var _share    = self.data('share:list'),
+            _active   = self.data('share:active'),
+            _callback = { trigger: self, list: _share };
+        
+        _active ? o.hide.call(self, _callback) : o.show.call(self, _callback);
+        
+        self.data('share:active', !_active);
       });
       
-      self.bind('mouseup', function(e){
-        o.show(e, _share);
-      });
+      // If fragmenting is enabled add to link.
+      if ( o.fragment ) {
+        self.attr('href', '#' + self.attr('id'));
+      }
+      
+      // If fragment checking is enabled and is active, open share list on page load.
+      if ( o.fragment && fragment ) {
+        self.trigger('click');
+      }
     });
-    
   };
   
   // Default settings.
   $.fn.share.defaults = {
-    services: null,
+    cssclass: 'jquery-share',
+    included: null,
+    excluded: [],
+    prepend: '',
+    append: '',
+    target: '_blank',
+    fragment: false,
     hover: false,
     title: null,
     url: null,
     host: null,
+    iconset: '32',
+    iconsettype: 'png',
     show: function() {},
     hide: function() {}
   };
@@ -54,21 +94,16 @@
   $.fn.share.services = {
     twitter:      { name: 'Twitter', url: 'http://twitter.com/home?status=${title}%20${url}' },
     facebook:     { name: 'Facebook', url: 'http://facebook.com/sharer.php?u=${url}' },
-    digg:         { name: 'Digg', url: 'http://digg.com/submit?phase=2&url=${url}&title=${title}' },
-    stumbleupon:  { name: 'Stumbleupon', url: 'http://stumbleupon.com/submit?url=${url}&title=${title}' },
-    buzz:         { name: 'Buzz', url: 'http://google.com/reader/link?url=${url}&title=${title}&srcURL=${host}' },
-    delicious:    { name: 'Delicious', url: 'http://del.icio.us/post?url=${url}&title=${title}' }
+    digg:         { name: 'Digg', url: 'http://digg.com/submit?phase=2&amp;url=${url}&amp;title=${title}' },
+    stumbleupon:  { name: 'Stumbleupon', url: 'http://stumbleupon.com/submit?url=${url}&amp;title=${title}' },
+    reddit:       { name: 'Reddit', url: 'http://reddit.com/submit?url=${url}&amp;title=${title}' },
+    delicious:    { name: 'Delicious', url: 'http://del.icio.us/post?url=${url}&amp;title=${title}' }
   };
   
-  // Extend Object prototype.
-  Object.prototype.keys = function() {
-    var keys = [];
-    
-    for ( var key in this ) {
-      keys.push(key);
-    }
-    
-    return keys;
-  };
+  function getkeys(obj) {
+    var a = [];
+    $.each(obj, function(k) { a.push(k) });
+    return a;
+  }
   
 })(jQuery);
