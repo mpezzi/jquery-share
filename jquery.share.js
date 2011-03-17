@@ -24,6 +24,10 @@
       url = self.attr('data-share-url') || url;
       title = self.attr('data-share-title') || title;
       
+      url = encodeURIComponent( url );
+      title = encodeURIComponent( title );
+      host = encodeURIComponent( host );
+      
       // Set default data.
       self.data('share:list', false);
       self.data('share:active', false);
