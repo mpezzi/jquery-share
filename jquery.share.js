@@ -97,7 +97,8 @@
     digg:         { name: 'Digg', url: 'http://digg.com/submit?url=${url}&amp;title=${title}' },
     stumbleupon:  { name: 'Stumbleupon', url: 'http://stumbleupon.com/submit?url=${url}&amp;title=${title}' },
     reddit:       { name: 'Reddit', url: 'http://reddit.com/submit?url=${url}&amp;title=${title}' },
-    delicious:    { name: 'Delicious', url: 'http://del.icio.us/post?url=${url}&amp;title=${title}' }
+    delicious:    { name: 'Delicious', url: 'http://del.icio.us/post?url=${url}&amp;title=${title}' },
+    email:        { name: 'Email', url: 'mailto:?subject=${title}&body=${url}' }
   };
   
   function getkeys(obj) {
