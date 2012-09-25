@@ -93,7 +93,7 @@
   // Availble sharing services.
   $.fn.share.services = {
     twitter:      { name: 'Twitter', url: 'http://twitter.com/home?status=${title}%20${url}' },
-    facebook:     { name: 'Facebook', url: 'http://facebook.com/sharer.php?u=${url}' },
+    facebook:     { name: 'Facebook', url: 'https://www.facebook.com/sharer.php?u=${url}&display=popup' },
     digg:         { name: 'Digg', url: 'http://digg.com/submit?url=${url}&amp;title=${title}' },
     stumbleupon:  { name: 'Stumbleupon', url: 'http://stumbleupon.com/submit?url=${url}&amp;title=${title}' },
     reddit:       { name: 'Reddit', url: 'http://reddit.com/submit?url=${url}&amp;title=${title}' },
